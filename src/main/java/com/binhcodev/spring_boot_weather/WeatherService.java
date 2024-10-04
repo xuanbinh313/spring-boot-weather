@@ -22,10 +22,10 @@ public class WeatherService {
     @Cacheable(value = "WeatherCache", key = "#country")
     public WeatherResponse getWeather(String country) {
         // This log will only appear when a new request is made (i.e., cache miss)
-        logger.info("Fetching new data from weather API for country: {}", country);
+        logger.info("Fetching new data from weather API for country", country);
         try {
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<WeatherResponse> response = restTemplate.getForEntity(apiURL + country + "?key=" + API_KEY, WeatherResponse.class);
+            ResponseEntity<WeatherResponse> response = restTemplate.getForEntity(apiURL + country + "?contentType=json&key=" + API_KEY, WeatherResponse.class);
             return response.getBody();
         } catch (RestClientException e) {
             // Handle 4xx and 5xx HTTP errors from the API
